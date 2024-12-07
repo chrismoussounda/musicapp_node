@@ -20,7 +20,4 @@ export class CreateSongDto {
   @IsString()
   @IsOptional()
   coverUrl?: string;
-
-  @IsNumber()
-  playlistId: number;
 }

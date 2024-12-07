@@ -21,6 +21,16 @@ A robust, type-safe backend for a music player application built with TypeScript
 - **Validation**: class-validator
 - **Transformation**: class-transformer
 
+## To-Do
+
+1. **CRUD Operations**: Ensure Update and Delete actions are fully implemented and tested for songs and playlists.
+2. **Error Handling**: Enhance error handling mechanisms throughout the API.
+3. **Performance Optimization**: Optimize database queries and improve performance.
+4. **Testing**: Add unit and integration tests to ensure API reliability.
+5. **Documentation**: Improve API documentation for better developer understanding.
+6. **Refactoring**: Review and refactor code for better readability and maintainability.
+7. **Database Management**: Implement migration scripts and version control for database schema changes.
+
 ## 🔧 Prerequisites
 
 - Node.js (v16 or higher)

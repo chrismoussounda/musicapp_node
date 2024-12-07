@@ -6,17 +6,9 @@ import { CreateSongDto } from "../dtos";
 export class SongController {
   static async createSong(req: Request, res: Response): Promise<void> {
     try {
-      const { playlistId, ...songData } = req.body as CreateSongDto;
+      const data = req.body as CreateSongDto;
 
-      const playlist = await Playlist.findOne({
-        where: { id: playlistId },
-      });
-
-      if (!playlist) {
-        throw new Error("404|Playlist not found");
-      }
-
-      const song = Song.create({ ...songData, playlist }).save();
+      const song = await Song.create({ ...data }).save();
 
       res.status(201).json(song);
     } catch (error: any) {
@@ -31,7 +23,7 @@ export class SongController {
 
   static async getAllSongs(req: Request, res: Response): Promise<void> {
     try {
-      const songs = await Song.find({ relations: ["playlist"] });
+      const songs = await Song.find({ order: { id: "desc" } });
       res.json(songs);
     } catch (error: any) {
       res.status(500).json({ message: "Error fetching songs", error });
@@ -43,7 +35,6 @@ export class SongController {
       const id = parseInt(req.params.id);
       const song = await Song.findOne({
         where: { id },
-        relations: ["playlist"],
       });
 
       if (!song) {

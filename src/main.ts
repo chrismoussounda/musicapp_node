@@ -1,11 +1,11 @@
 import 'reflect-metadata';
-import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
-import dotenv from "dotenv";
-import { AppDataSource } from "./data-source";
-import routes from "./routes";
-import { seedDatabase } from "./utils/seed";
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { datasource } from './data-source';
+import routes from './routes';
+import { seedDatabase } from './utils/seed';
 
 // Load environment variables
 dotenv.config();
@@ -16,13 +16,14 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3001;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/api", routes);
+app.use('/api', routes);
 
 // Database and Server Initialization
-AppDataSource.initialize()
+datasource
+  .initialize()
   .then(async () => {
-    console.log("Database connection established");
-    
+    console.log('Database connection established');
+
     // Seed database
     await seedDatabase();
 
@@ -32,5 +33,5 @@ AppDataSource.initialize()
     });
   })
   .catch((error) => {
-    console.error("Error during Data Source initialization", error);
+    console.error('Error during Data Source initialization', error);
   });

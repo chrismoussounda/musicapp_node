@@ -1,4 +1,13 @@
-import { IsString, IsOptional, Length } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsNumber,
+  Length,
+  ValidateNested,
+  IsArray,
+} from "class-validator";
+import { Type } from "class-transformer";
+import { Song } from "../../entities/Song";
 
 export class CreatePlaylistDto {
   @IsString()
@@ -13,4 +22,10 @@ export class CreatePlaylistDto {
   @IsString()
   @IsOptional()
   coverUrl?: string;
+
+  @IsArray()
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => Song)
+  songs: Song[];
 }

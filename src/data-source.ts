@@ -1,15 +1,15 @@
-import "reflect-metadata";
-import { DataSource } from "typeorm";
-import { Playlist } from "./entities/Playlist";
-import { Song } from "./entities/Song";
-import { config } from "dotenv";
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
+import { Playlist } from './entities/Playlist';
+import { Song } from './entities/Song';
+import { config } from 'dotenv';
 
 config();
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 
-export const AppDataSource = new DataSource({
-  type: "postgres",
+export const datasource = new DataSource({
+  type: 'postgres',
   url: process.env.DATABASE_URL,
   ssl: isProduction ? { rejectUnauthorized: false } : false,
   synchronize: true,

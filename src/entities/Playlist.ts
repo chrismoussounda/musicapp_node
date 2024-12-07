@@ -4,6 +4,8 @@ import {
   Column,
   OneToMany,
   BaseEntity,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { Song } from "./Song";
 
@@ -21,6 +23,7 @@ export class Playlist extends BaseEntity {
   @Column({ nullable: true })
   coverUrl?: string;
 
-  @OneToMany(() => Song, (song) => song.playlist, { cascade: true })
+  @ManyToMany(() => Song, (song) => song.playlists, { cascade: true })
+  @JoinTable({ name: "playlist_songs" })
   songs: Song[];
 }

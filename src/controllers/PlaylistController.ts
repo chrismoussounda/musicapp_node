@@ -5,8 +5,10 @@ import { CreatePlaylistDto } from "../dtos";
 export class PlaylistController {
   static async createPlaylist(req: Request, res: Response): Promise<void> {
     try {
-      const createPlalistDto = req.body as CreatePlaylistDto;
-      const playlist = await Playlist.create({ ...createPlalistDto }).save();
+      const { songs, ...data } = req.body as CreatePlaylistDto;
+      const playlist = Playlist.create({ ...data });
+      playlist.songs = songs;
+      await playlist.save();
       res.status(201).json(playlist);
     } catch (error) {
       res.status(500).json({ message: "Error creating playlist", error });
@@ -15,7 +17,10 @@ export class PlaylistController {
 
   static async getAllPlaylists(req: Request, res: Response): Promise<void> {
     try {
-      const playlists = await Playlist.find({ relations: ["songs"] });
+      const playlists = await Playlist.find({
+        relations: ["songs"],
+        order: { id: "desc" },
+      });
       res.json(playlists);
     } catch (error) {
       res.status(500).json({ message: "Error fetching playlists", error });
